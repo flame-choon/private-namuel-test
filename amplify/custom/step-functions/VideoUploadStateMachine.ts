@@ -278,7 +278,7 @@ export class VideoUploadStateMachine extends Construct {
         }
       },
       resultPath: sfn.JsonPath.DISCARD
-    }).addRetry({ maxAttempts: 5, interval: Duration.seconds(20) });
+    }).addRetry({ maxAttempts: 10, interval: Duration.seconds(20) });
 
     const waitForHighlightTranscriptionJob = new sfn.Wait(this, 'WaitForHighlightTranscriptionJob', {
       time: sfn.WaitTime.duration(Duration.seconds(5))
