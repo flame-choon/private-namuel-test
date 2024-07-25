@@ -144,6 +144,7 @@ export class VideoUploadStateMachine extends Construct {
 
     const highlightExtractMap = new sfn.Map(this, 'HighlightExtractMap', {
       itemsPath: "$.TopicsResult.Payload.topics",
+      maxConcurrency: 3,
       parameters: {
         "topic.$": "$$.Map.Item.Value",
         "uuid.$": "$.uuid",
