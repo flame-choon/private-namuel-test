@@ -8,12 +8,12 @@ export interface ModelOption {
 }
 
 export const modelOptions: ModelOption[] = [
-  // {
-  //   name: "Claude 3.0 Opus",
-  //   logo: "logos/anthropic-logo.png",
-  //   modelId: "anthropic.claude-3-opus-20240229-v1:0",
-  //   provider: "Anthropic"
-  // },
+  {
+    name: "Claude 3.0 Opus",
+    logo: "logos/anthropic-logo.png",
+    modelId: "anthropic.claude-3-opus-20240229-v1:0",
+    provider: "Anthropic"
+  },
   // {
   //   name: "Claude 3.5 Sonnet",
   //   logo: "logos/anthropic-logo.png",
@@ -26,12 +26,12 @@ export const modelOptions: ModelOption[] = [
     modelId: "anthropic.claude-3-sonnet-20240229-v1:0",
     provider: "Anthropic"
   },
-  {
-    name: "Claude 3.0 Haiku",
-    logo: "logos/anthropic-logo.png",
-    modelId: "anthropic.claude-3-haiku-20240307-v1:0",
-    provider: "Anthropic"
-  },
+  // {
+  //   name: "Claude 3.0 Haiku",
+  //   logo: "logos/anthropic-logo.png",
+  //   modelId: "anthropic.claude-3-haiku-20240307-v1:0",
+  //   provider: "Anthropic"
+  // },
   // {
   //   name: "Llama 3 70b Instruct",
   //   logo: "logos/meta-logo.png",
