@@ -280,7 +280,7 @@ export class VideoUploadStateMachine extends Construct {
     }).addRetry({ maxAttempts: 3, interval: Duration.seconds(5) });
 
     const waitForHighlightTranscriptionJob = new sfn.Wait(this, 'WaitForHighlightTranscriptionJob', {
-      time: sfn.WaitTime.duration(Duration.seconds(5))
+      time: sfn.WaitTime.duration(Duration.seconds(20))
     });
 
     const getHighlightTranscriptionJobStatus = new tasks.CallAwsService(this, 'GetHighlightTranscriptionJobStatus', {
