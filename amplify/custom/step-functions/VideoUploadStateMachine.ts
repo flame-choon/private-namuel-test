@@ -144,7 +144,7 @@ export class VideoUploadStateMachine extends Construct {
 
     const highlightExtractMap = new sfn.Map(this, 'HighlightExtractMap', {
       itemsPath: "$.TopicsResult.Payload.topics",
-      maxConcurrency: 3,
+      maxConcurrency: 5,
       parameters: {
         "topic.$": "$$.Map.Item.Value",
         "uuid.$": "$.uuid",
@@ -281,7 +281,7 @@ export class VideoUploadStateMachine extends Construct {
     }).addRetry({ maxAttempts: 3, interval: Duration.seconds(20) });
 
     const waitForHighlightTranscriptionJob = new sfn.Wait(this, 'WaitForHighlightTranscriptionJob', {
-      time: sfn.WaitTime.duration(Duration.seconds(20))
+      time: sfn.WaitTime.duration(Duration.seconds(5))
     });
 
     const getHighlightTranscriptionJobStatus = new tasks.CallAwsService(this, 'GetHighlightTranscriptionJobStatus', {
