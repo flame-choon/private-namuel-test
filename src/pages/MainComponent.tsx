@@ -27,7 +27,7 @@ const MainComponent: React.FC<MainComponentProps> = (props) => {
       <TopNavigation
         identity={{
           href: "/",
-          title: "AWS Shorts",
+          title: "AWS Bedrock-나무엘",
         }}
         utilities={[
           {
@@ -48,7 +48,7 @@ const MainComponent: React.FC<MainComponentProps> = (props) => {
           <SideNavigation
             header={{
               href: '#',
-              text: 'AWS Shorts',
+              text: 'AWS Bedrock-나무엘',
             }}
             items={[
               { type: 'link', text: `Create New Shorts`, href: `/` },
