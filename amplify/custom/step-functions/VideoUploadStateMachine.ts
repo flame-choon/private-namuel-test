@@ -124,6 +124,7 @@ export class VideoUploadStateMachine extends Construct {
 
     const processTopicsMap = new sfn.Map(this, 'ProcessTopicsMap', {
       itemsPath: "$.TopicsResult.Payload.topics",
+      maxConcurrency: 5,
       parameters: {
         "topic.$": "$$.Map.Item.Value",
         "uuid.$": "$.uuid",
@@ -144,7 +145,6 @@ export class VideoUploadStateMachine extends Construct {
 
     const highlightExtractMap = new sfn.Map(this, 'HighlightExtractMap', {
       itemsPath: "$.TopicsResult.Payload.topics",
-      maxConcurrency: 5,
       parameters: {
         "topic.$": "$$.Map.Item.Value",
         "uuid.$": "$.uuid",
@@ -163,11 +163,10 @@ export class VideoUploadStateMachine extends Construct {
         "index.$": "$.Payload.index",
         "uuid.$": "$.Payload.uuid",
         "raw_file_path.$": "$.Payload.raw_file_path",
-        "start_timecode.$": "$.Payload.start_timecode",
-        "end_timecode.$": "$.Payload.end_timecode",
+        "timeframes.$": "$.Payload.timeframes",
         "output_destination.$": "$.Payload.output_destination"
       },
-      resultPath: "$.timeframe_extracted"
+      resultPath: "$.timeframe_extracted",
     });
 
     const checkExtractionJobStatus = new sfn.Choice(this, 'CheckExtractionJobStatus');
@@ -189,12 +188,7 @@ export class VideoUploadStateMachine extends Construct {
               },
               "VideoSelector": {},
               "TimecodeSource": "ZEROBASED",
-              "InputClippings": [
-                {
-                  "StartTimecode.$": "$.timeframe_extracted.start_timecode",
-                  "EndTimecode.$": "$.timeframe_extracted.end_timecode"
-                }
-              ]
+              "InputClippings.$": "$.timeframe_extracted.timeframes"
             }
           ],
           "OutputGroups": [ 
@@ -246,6 +240,7 @@ export class VideoUploadStateMachine extends Construct {
           ]
         }
       },
+      integrationPattern: sfn.IntegrationPattern.RUN_JOB,
       resultPath: sfn.JsonPath.DISCARD
     })
 
@@ -258,7 +253,7 @@ export class VideoUploadStateMachine extends Construct {
       },
       resultPath: "$.FHD_Job"
     });
-
+  
     const startHighlightTranscriptionJob = new tasks.CallAwsService(this, 'StartHighlightTranscriptionJob', {
       service: 'transcribe',
       action: 'startTranscriptionJob',
@@ -278,7 +273,7 @@ export class VideoUploadStateMachine extends Construct {
         }
       },
       resultPath: sfn.JsonPath.DISCARD
-    }).addRetry({ maxAttempts: 10, interval: Duration.seconds(20) });
+    }).addRetry({ maxAttempts: 3, interval: Duration.seconds(5) });
 
     const waitForHighlightTranscriptionJob = new sfn.Wait(this, 'WaitForHighlightTranscriptionJob', {
       time: sfn.WaitTime.duration(Duration.seconds(5))

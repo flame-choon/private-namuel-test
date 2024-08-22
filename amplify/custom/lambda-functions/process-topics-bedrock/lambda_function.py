@@ -59,42 +59,103 @@ def extract_and_process_section(topic, script, modelID):
        
     prompt = f"""
     Human: 
-    This is a <script> of a video.
+        FIND THE MOST RELEVANT CONTENT:
 
-    <script> {script} </script> 
-    Extract and chunk out one part of the <script> that best explains or covers the <topic> below.
+        Carefully read the entire <script> {script} </script>.
+        Understand the given <Topic> {topic} </Topic>.
 
-    <Topic> {topic} </Topic>
-
-    Follow <Instructions> and think step by step to do this.
-    <Instructions>
-        <Step 1>
-            Thoroughly read and understand the entire script.
-        </Step 1>
-        <Step 2>
-            Identify the specific part of the script where the <Topic> is being covered.
-        </Step 2>
-        <Step 3>
-            From the part identified in <Step 2>, extract a section that best explains the specified topic. This extract MUST be 300 words or less.
-            IMPORTANT: Copy the text exactly as it appears. Do not fix, modify, rephrase, summarize, correct, skip, or change anything from the original <script>. This includes all punctuation, spelling, grammatical errors, and spacing.
-        </Step 3>
-        <Step 4>
-            Double-check the extracted section. Confirm that not a single character has been changed and that it can be found verbatim in the <script>. Verify that it is 300 words or less.
-        </Step 4>
-        <Step 5>
-            Create an appropriate video title in the language of the <script> for this section. Ensure that proper nouns are kept in their correct English format.
-        </Step 5>
-    </Instructions>
-    Output only the extracted section as below:
+    <instructions>
+    1. Read the given <script></script> carefully.
+    2. Select the most relevant sentences or parts(consisted of sentences) that would come together and act as a separate script, best explaining the <topic></topic>.
+    3. Use [...] to indicate omitted text between non-consecutive selections.
+    4. Maintain the original language, including any errors.
+    5. Try to keep it less than 200 words. Not a must.
+    6. Format your response as follows:
+    <thought>
+    Briefly explain:
+    - Your selection process
+    - How you preserved the original text
+    - Any challenges faced
+    - Reasons for non-consecutive selections (if applicable)
+    </thought>
+    <Topic>Brief topic description</Topic>
     <JSON>
     {{
-        "VideoTitle": "[Video title with proper nouns in its original language]",
-        "text": "[Extracted relevant section from the original transcript <= 300 words]"
+    "VideoTitle": "Concise title summarizing the content",
+    "text": "Your selection of relevant sentences, preserving original text exactly"
     }}
     </JSON>
-    Write after <JSON> and only
+    6. Double-check for accuracy and format adherence.
+    </instructions>
+    <important_notes>
+
+    Prioritize relevance and preservation of original text.
+    Match the output language to the input script.
+    Do not correct any errors in the original text.
+    Maintain the exact format, including double curly braces in JSON.
+    Try to keep the selection total in less than 200 words. 
+    Use [...] for non-consecutive selections.
+    </important_notes>
+
+    <examples>
+    Example 1 (English):
+    <script>
+    The pyramids of Egypt are ancient monumental structures. Most were built during the Old and Middle Kingdom periods. The most famous Egyptian pyramids are those found at Giza, on the outskirts of Cairo. Several of the Giza pyramids are counted among the largest structures ever built. The Pyramid of Khufu is the largest Egyptian pyramid. It is the only one to remain largely intact. Egyptologists believe that the pyramids were built as tombs for the country's pharaohs and their consorts during the Old and Middle Kingdom periods.
+    </script>
+    <Topic>Egyptian Pyramids</Topic>
+    <JSON>
+    {{
+    "VideoTitle": "The Magnificent Pyramids of Ancient Egypt",
+    "text": "The pyramids of Egypt are ancient monumental structures. Most were built during the Old and Middle Kingdom periods. [...] The Pyramid of Khufu is the largest Egyptian pyramid. It is the only one to remain largely intact. Egyptologists believe that the pyramids were built as tombs for the country's pharaohs and their consorts during the Old and Middle Kingdom periods."
+    }}
+    </JSON>
+    Example 2 (Korean):
+    <script>
+    김치는 한국의 대표적인 발효 음식입니다. 주로 배추와 무를 사용하며, 고춧가루, 마늘, 생강 등의 양념을 넣어 만듭니다. 김치는 비타민과 미네랄이 풍부하며, 유산균도 많이 함유되어 있습니다. 지역과 계절에 따라 다양한 종류의 김치가 있습니다. 김치는 이제 세계적으로 인정받는 건강식품이 되었습니다.
+    </script>
+    <Topic>김치의 특징과 영양</Topic>
+    <JSON>
+    {{
+    "VideoTitle": "김치: 한국의 전통 발효 음식",
+    "text": "김치는 한국의 대표적인 발효 음식입니다. 주로 배추와 무를 사용하며, 고춧가루, 마늘, 생강 등의 양념을 넣어 만듭니다. 김치는 비타민과 미네랄이 풍부하며, 유산균도 많이 함유되어 있습니다. [...] 김치는 이제 세계적으로 인정받는 건강식품이 되었습니다."
+    }}
+    </JSON>
+    Example 3 (English):
+    <script>
+    Photosynthesis is a process used by plants and other organisms to convert light energy into chemical energy. This chemical energy is stored in carbohydrate molecules, such as sugars, which are synthesized from carbon dioxide and water. Oxygen is released as a byproduct. This process is crucial for life on Earth as it provides the oxygen we breath and the food we eat. Photosynthesis occurs in the chloroplasts, specifically using chlorophyll, the green pigment involved in photosynthesis. The process has two stages: light-dependent reactions and light-independent reactions, also known as the Calvin cycle.
+    </script>
+    <Topic>Process of Photosynthesis</Topic>
+    <JSON>
+    {{
+    "VideoTitle": "Photosynthesis: Nature's Way of Harnessing Light",
+    "text": "Photosynthesis is a process used by plants and other organisms to convert light energy into chemical energy. This chemical energy is stored in carbohydrate molecules, such as sugars, which are synthesized from carbon dioxide and water. Oxygen is released as a byproduct. [...] Photosynthesis occurs in the chloroplasts, specifically using chlorophyll, the green pigment involved in photosynthesis. The process has two stages: light-dependent reactions and light-independent reactions, also known as the Calvin cycle."
+    }}
+    </JSON>
+    Example 4 (English):
+    <script>
+    The Rennaisance was a period of cultural, artistic, political, and economic revival following the Middle Ages. It began in Italy in the 14th century and lasted until the 17th century, marking the transition between Medieval and Early Modern Europe. The term 'Renaissance' is derived from the French word for 'rebirth'. This period was characterized by a renewed interest in ancient Greek and Roman texts and a shift towards humanism. Notable Rennaisance figures include Leonardo da Vinci, Michelangelo, and Raphael. The invention of the printing press in the 15th century greatly facilitated the spread of new ideas.
+    </script>
+    <Topic>The Renaissance Period</Topic>
+    <JSON>
+    {{
+    "VideoTitle": "The Renaissance: Europe's Age of Rebirth",
+    "text": "The Rennaisance was a period of cultural, artistic, political, and economic revival following the Middle Ages. It began in Italy in the 14th century and lasted until the 17th century, marking the transition between Medieval and Early Modern Europe. [...] This period was characterized by a renewed interest in ancient Greek and Roman texts and a shift towards humanism. Notable Rennaisance figures include Leonardo da Vinci, Michelangelo, and Raphael. The invention of the printing press in the 15th century greatly facilitated the spread of new ideas."
+    }}
+    </JSON>
+    Example 5 (Korean):
+    <script>
+    한글은 세종대왕이 1443년에 창제한 한국의 고유 문자입니다. 한글은 표음문자로, 자음과 모음을 조합하여 글자를 만듭니다. 처음에는 28자였지만, 현재는 24자를 사용합니다. 한글의 제작 원리는 과학적이고 체계적입니다. 자음은 발음 기관의 모양을, 모음은 하늘, 땅, 사람을 본떠 만들었습니다. 한글은 배우기 쉽고 사용하기 편리하여 문맹 퇴치에 크게 기여했습니다. 오늘날 한글은 세계에서 가장 과학적인 문자 중 하나로 인정받고 있습니다.
+    </script>
+    <Topic>한글의 특징과 역사</Topic>
+    <JSON>
+    {{
+    "VideoTitle": "한글: 세종대왕의 위대한 창조",
+    "text": "한글은 세종대왕이 1443년에 창제한 한국의 고유 문자입니다. 한글은 표음문자로, 자음과 모음을 조합하여 글자를 만듭니다. [...] 한글의 제작 원리는 과학적이고 체계적입니다. 자음은 발음 기관의 모양을, 모음은 하늘, 땅, 사람을 본떠 만들었습니다. [...] 오늘날 한글은 세계에서 가장 과학적인 문자 중 하나로 인정받고 있습니다."
+    }}
+    </JSON>
+    </examples>
     
-    \n\nAssistant:<JSON> 
+    \n\nAssistant:
     """
 
     body = json.dumps({
@@ -104,11 +165,16 @@ def extract_and_process_section(topic, script, modelID):
         "temperature": 0,
         "top_p": 0
     })
+
+    #for test purposes
+
     response = bedrock.invoke_model(body=body, accept='*/*', contentType='application/json', modelId=modelID)
 
     response_body = json.loads(response['body'].read())
     
     response_text = response_body['content'][0]['text']
+    
+    print(response_text)
 
     firstIndex = int(response_text.find('{'))
     endIndex = int(response_text.rfind('}'))
