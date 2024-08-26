@@ -80,7 +80,7 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
   const [ subtitles, setSubtitles ] = useState<Subtitle[]>([]);
 
   useEffect(() => {
-    setTitle(props.title);
+    // setTitle(props.title);
 
     getUrl({
       path: `videos/${props.id}/FHD/${props.tab}-FHD.mp4`,
@@ -99,24 +99,24 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
       },
     }).result
     .then((data) => data.body.text())
-    .then((text) => {
-      const vttfile = text.split("\n").slice(2);
-      const subtitleLength = vttfile.push("");
-      const subtitles: Subtitle[] = [];
+    // .then((text) => {
+    //   const vttfile = text.split("\n").slice(2);
+    //   const subtitleLength = vttfile.push("");
+    //   const subtitles: Subtitle[] = [];
 
-      for(var i=0;i<subtitleLength/4; i++){
+    //   for(var i=0;i<subtitleLength/4; i++){
 
         
-        subtitles.push({
-          index: Number(vttfile[i*4]),
-          timestring: vttfile[i*4+1],
-          text: vttfile[i*4+2],
-        })
-      }
+    //     subtitles.push({
+    //       index: Number(vttfile[i*4]),
+    //       timestring: vttfile[i*4+1],
+    //       text: vttfile[i*4+2],
+    //     })
+    //   }
 
-      setSubtitles(subtitles);
+    //   setSubtitles(subtitles);
 
-    })
+    // })
     .catch(() => setFetchErr(true));
   }, [])
 
