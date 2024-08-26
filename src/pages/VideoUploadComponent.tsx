@@ -41,8 +41,7 @@ const VideoUploadComponent: React.FC = () => {
         onChange={({ detail }) => setTileValue(detail.value)}
         value={tileValue}
         items={[
-          { label: "Direct Upload", value: "upload" },
-          { label: "Link", value: "link", disabled: true }
+          { label: "Direct Upload", value: "upload" }
         ]}
       />
       <h3>Select LLM</h3>
