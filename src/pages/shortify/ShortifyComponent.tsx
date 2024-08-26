@@ -80,7 +80,7 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
   const [ subtitles, setSubtitles ] = useState<Subtitle[]>([]);
 
   useEffect(() => {
-    // setTitle(props.title);
+    setTitle(props.title);
 
     getUrl({
       path: `videos/${props.id}/FHD/${props.tab}-FHD.mp4`,
