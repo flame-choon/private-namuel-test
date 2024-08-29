@@ -116,179 +116,179 @@ export class VideoUploadStateMachine extends Construct {
 
     const checkTranscriptionJobStatus = new sfn.Choice(this, 'CheckTranscriptionJobStatus');
 
-    const extractTopicsTask = new tasks.LambdaInvoke(this, 'ExtractTopics', {
-      lambdaFunction: extractTopics.handler,
-      payload: sfn.TaskInput.fromJsonPathAt("$"),
-      resultPath: "$.TopicsResult"
-    });
+    // const extractTopicsTask = new tasks.LambdaInvoke(this, 'ExtractTopics', {
+    //   lambdaFunction: extractTopics.handler,
+    //   payload: sfn.TaskInput.fromJsonPathAt("$"),
+    //   resultPath: "$.TopicsResult"
+    // });
 
-    const processTopicsMap = new sfn.Map(this, 'ProcessTopicsMap', {
-      itemsPath: "$.TopicsResult.Payload.topics",
-      maxConcurrency: 5,
-      parameters: {
-        "topic.$": "$$.Map.Item.Value",
-        "uuid.$": "$.uuid",
-        "index.$": "$$.Map.Item.Index",
-        "script.$": "$.TopicsResult.Payload.script",
-        "modelID.$": "$.TopicsResult.Payload.modelID",
-        "owner.$": "$.TopicsResult.Payload.owner",
-        "bucket_name.$": "$.bucket_name",
-      },
-      resultPath: sfn.JsonPath.DISCARD
-    });
+    // const processTopicsMap = new sfn.Map(this, 'ProcessTopicsMap', {
+    //   itemsPath: "$.TopicsResult.Payload.topics",
+    //   maxConcurrency: 5,
+    //   parameters: {
+    //     "topic.$": "$$.Map.Item.Value",
+    //     "uuid.$": "$.uuid",
+    //     "index.$": "$$.Map.Item.Index",
+    //     "script.$": "$.TopicsResult.Payload.script",
+    //     "modelID.$": "$.TopicsResult.Payload.modelID",
+    //     "owner.$": "$.TopicsResult.Payload.owner",
+    //     "bucket_name.$": "$.bucket_name",
+    //   },
+    //   resultPath: sfn.JsonPath.DISCARD
+    // });
 
-    const processTopicTask = new tasks.LambdaInvoke(this, 'ProcessTopic', {
-      lambdaFunction: processTopic.handler,
-      payload: sfn.TaskInput.fromJsonPathAt("$"),
-      resultPath: sfn.JsonPath.DISCARD
-    });
+    // const processTopicTask = new tasks.LambdaInvoke(this, 'ProcessTopic', {
+    //   lambdaFunction: processTopic.handler,
+    //   payload: sfn.TaskInput.fromJsonPathAt("$"),
+    //   resultPath: sfn.JsonPath.DISCARD
+    // });
 
-    const highlightExtractMap = new sfn.Map(this, 'HighlightExtractMap', {
-      itemsPath: "$.TopicsResult.Payload.topics",
-      parameters: {
-        "topic.$": "$$.Map.Item.Value",
-        "uuid.$": "$.uuid",
-        "index.$": "$$.Map.Item.Index",
-        "bucket_name.$": "$.bucket_name",
-      },
-      resultPath: sfn.JsonPath.DISCARD
-    });
+    // const highlightExtractMap = new sfn.Map(this, 'HighlightExtractMap', {
+    //   itemsPath: "$.TopicsResult.Payload.topics",
+    //   parameters: {
+    //     "topic.$": "$$.Map.Item.Value",
+    //     "uuid.$": "$.uuid",
+    //     "index.$": "$$.Map.Item.Index",
+    //     "bucket_name.$": "$.bucket_name",
+    //   },
+    //   resultPath: sfn.JsonPath.DISCARD
+    // });
 
-    const extractTimeframeTask = new tasks.LambdaInvoke(this, 'ExtractTimeframe', {
-      lambdaFunction: extractTimeframe.handler,
-      payload: sfn.TaskInput.fromJsonPathAt("$"),
-      resultSelector: {
-        "statusCode.$": "$.Payload.statusCode",
-        "duration.$": "$.Payload.duration",
-        "index.$": "$.Payload.index",
-        "uuid.$": "$.Payload.uuid",
-        "raw_file_path.$": "$.Payload.raw_file_path",
-        "timeframes.$": "$.Payload.timeframes",
-        "output_destination.$": "$.Payload.output_destination"
-      },
-      resultPath: "$.timeframe_extracted",
-    });
+    // const extractTimeframeTask = new tasks.LambdaInvoke(this, 'ExtractTimeframe', {
+    //   lambdaFunction: extractTimeframe.handler,
+    //   payload: sfn.TaskInput.fromJsonPathAt("$"),
+    //   resultSelector: {
+    //     "statusCode.$": "$.Payload.statusCode",
+    //     "duration.$": "$.Payload.duration",
+    //     "index.$": "$.Payload.index",
+    //     "uuid.$": "$.Payload.uuid",
+    //     "raw_file_path.$": "$.Payload.raw_file_path",
+    //     "timeframes.$": "$.Payload.timeframes",
+    //     "output_destination.$": "$.Payload.output_destination"
+    //   },
+    //   resultPath: "$.timeframe_extracted",
+    // });
 
-    const checkExtractionJobStatus = new sfn.Choice(this, 'CheckExtractionJobStatus');
+    // const checkExtractionJobStatus = new sfn.Choice(this, 'CheckExtractionJobStatus');
 
-    const mediaConvertExtractJob = new tasks.MediaConvertCreateJob(this, 'MediaConvertExtractJob', {
-      createJobRequest: {
-        "Role": mediaConvertRole.roleArn,
-        "Settings": {
-          "TimecodeConfig": {
-            "Source": "ZEROBASED"
-          },
-          "Inputs": [
-            {
-              "FileInput.$": "$.timeframe_extracted.raw_file_path",
-              "AudioSelectors": {
-                "Audio Selector 1": {
-                  "DefaultSelection": "DEFAULT"
-                }
-              },
-              "VideoSelector": {},
-              "TimecodeSource": "ZEROBASED",
-              "InputClippings.$": "$.timeframe_extracted.timeframes"
-            }
-          ],
-          "OutputGroups": [ 
-            {
-              "Name": "FileGroup",
-              "Outputs": [
-                {
-                  "ContainerSettings": {
-                    "Container": "MP4",
-                    "Mp4Settings": {}
-                  },
-                  "VideoDescription": {
-                    "Width": 1920,
-                    "ScalingBehavior": "FIT",
-                    "Height": 1080,
-                    "CodecSettings": {
-                      "Codec": "H_264",
-                      "H264Settings": {
-                        "FramerateDenominator": 1,
-                        "MaxBitrate": 5000000,
-                        "FramerateControl": "SPECIFIED",
-                        "RateControlMode": "QVBR",
-                        "FramerateNumerator": 25,
-                        "SceneChangeDetect": "TRANSITION_DETECTION"
-                      }
-                    }
-                  },
-                  "AudioDescriptions": [
-                    {
-                      "CodecSettings": {
-                        "Codec": "AAC",
-                        "AacSettings": {
-                          "Bitrate": 96000,
-                          "CodingMode": "CODING_MODE_2_0",
-                          "SampleRate": 48000
-                        }
-                      }
-                    }
-                  ]
-                }
-              ],
-              "OutputGroupSettings": {
-                "Type": "FILE_GROUP_SETTINGS",
-                "FileGroupSettings": {
-                  "Destination.$": "$.timeframe_extracted.output_destination"
-                }
-              }
-            }
-          ]
-        }
-      },
-      integrationPattern: sfn.IntegrationPattern.RUN_JOB,
-      resultPath: sfn.JsonPath.DISCARD
-    })
+    // const mediaConvertExtractJob = new tasks.MediaConvertCreateJob(this, 'MediaConvertExtractJob', {
+    //   createJobRequest: {
+    //     "Role": mediaConvertRole.roleArn,
+    //     "Settings": {
+    //       "TimecodeConfig": {
+    //         "Source": "ZEROBASED"
+    //       },
+    //       "Inputs": [
+    //         {
+    //           "FileInput.$": "$.timeframe_extracted.raw_file_path",
+    //           "AudioSelectors": {
+    //             "Audio Selector 1": {
+    //               "DefaultSelection": "DEFAULT"
+    //             }
+    //           },
+    //           "VideoSelector": {},
+    //           "TimecodeSource": "ZEROBASED",
+    //           "InputClippings.$": "$.timeframe_extracted.timeframes"
+    //         }
+    //       ],
+    //       "OutputGroups": [ 
+    //         {
+    //           "Name": "FileGroup",
+    //           "Outputs": [
+    //             {
+    //               "ContainerSettings": {
+    //                 "Container": "MP4",
+    //                 "Mp4Settings": {}
+    //               },
+    //               "VideoDescription": {
+    //                 "Width": 1920,
+    //                 "ScalingBehavior": "FIT",
+    //                 "Height": 1080,
+    //                 "CodecSettings": {
+    //                   "Codec": "H_264",
+    //                   "H264Settings": {
+    //                     "FramerateDenominator": 1,
+    //                     "MaxBitrate": 5000000,
+    //                     "FramerateControl": "SPECIFIED",
+    //                     "RateControlMode": "QVBR",
+    //                     "FramerateNumerator": 25,
+    //                     "SceneChangeDetect": "TRANSITION_DETECTION"
+    //                   }
+    //                 }
+    //               },
+    //               "AudioDescriptions": [
+    //                 {
+    //                   "CodecSettings": {
+    //                     "Codec": "AAC",
+    //                     "AacSettings": {
+    //                       "Bitrate": 96000,
+    //                       "CodingMode": "CODING_MODE_2_0",
+    //                       "SampleRate": 48000
+    //                     }
+    //                   }
+    //                 }
+    //               ]
+    //             }
+    //           ],
+    //           "OutputGroupSettings": {
+    //             "Type": "FILE_GROUP_SETTINGS",
+    //             "FileGroupSettings": {
+    //               "Destination.$": "$.timeframe_extracted.output_destination"
+    //             }
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   integrationPattern: sfn.IntegrationPattern.RUN_JOB,
+    //   resultPath: sfn.JsonPath.DISCARD
+    // })
 
 
-    const mediaConvertExtractJobParam = new sfn.Pass(this, 'MediaConvertExtractJobParam', {
-      parameters: {
-        "FHD_Jobname.$": "States.Format('{}_FHD_{}', $.timeframe_extracted.uuid, $.timeframe_extracted.index)",
-        "FHD_SourceKey.$": "States.Format('{}.mp4', $.timeframe_extracted.output_destination)",
-        "FHD_OutputKey.$": "States.Format('videos/{}/ShortsTranscript/{}-TranscriptShorts.json', $.timeframe_extracted.uuid, $.timeframe_extracted.index)"
-      },
-      resultPath: "$.FHD_Job"
-    });
+    // const mediaConvertExtractJobParam = new sfn.Pass(this, 'MediaConvertExtractJobParam', {
+    //   parameters: {
+    //     "FHD_Jobname.$": "States.Format('{}_FHD_{}', $.timeframe_extracted.uuid, $.timeframe_extracted.index)",
+    //     "FHD_SourceKey.$": "States.Format('{}.mp4', $.timeframe_extracted.output_destination)",
+    //     "FHD_OutputKey.$": "States.Format('videos/{}/ShortsTranscript/{}-TranscriptShorts.json', $.timeframe_extracted.uuid, $.timeframe_extracted.index)"
+    //   },
+    //   resultPath: "$.FHD_Job"
+    // });
   
-    const startHighlightTranscriptionJob = new tasks.CallAwsService(this, 'StartHighlightTranscriptionJob', {
-      service: 'transcribe',
-      action: 'startTranscriptionJob',
-      iamAction: 'transcribe:StartTranscriptionJob',
-      iamResources: ['*'],
-      parameters: {
-        "TranscriptionJobName.$": "$.FHD_Job.FHD_Jobname",
-        "MediaFormat": "mp4",
-        "Media": { "MediaFileUri.$": "$.FHD_Job.FHD_SourceKey" },
-        "OutputBucketName.$": "$.bucket_name",
-        "OutputKey.$": "$.FHD_Job.FHD_OutputKey",
-        "LanguageOptions": ["en-US", "ko-KR"],
-        "IdentifyLanguage": true,
-        "Subtitles": {
-          "Formats": ["vtt"],
-          "OutputStartIndex": 1
-        }
-      },
-      resultPath: sfn.JsonPath.DISCARD
-    }).addRetry({ maxAttempts: 3, interval: Duration.seconds(5) });
+    // const startHighlightTranscriptionJob = new tasks.CallAwsService(this, 'StartHighlightTranscriptionJob', {
+    //   service: 'transcribe',
+    //   action: 'startTranscriptionJob',
+    //   iamAction: 'transcribe:StartTranscriptionJob',
+    //   iamResources: ['*'],
+    //   parameters: {
+    //     "TranscriptionJobName.$": "$.FHD_Job.FHD_Jobname",
+    //     "MediaFormat": "mp4",
+    //     "Media": { "MediaFileUri.$": "$.FHD_Job.FHD_SourceKey" },
+    //     "OutputBucketName.$": "$.bucket_name",
+    //     "OutputKey.$": "$.FHD_Job.FHD_OutputKey",
+    //     "LanguageOptions": ["en-US", "ko-KR"],
+    //     "IdentifyLanguage": true,
+    //     "Subtitles": {
+    //       "Formats": ["vtt"],
+    //       "OutputStartIndex": 1
+    //     }
+    //   },
+    //   resultPath: sfn.JsonPath.DISCARD
+    // }).addRetry({ maxAttempts: 3, interval: Duration.seconds(5) });
 
-    const waitForHighlightTranscriptionJob = new sfn.Wait(this, 'WaitForHighlightTranscriptionJob', {
-      time: sfn.WaitTime.duration(Duration.seconds(5))
-    });
+    // const waitForHighlightTranscriptionJob = new sfn.Wait(this, 'WaitForHighlightTranscriptionJob', {
+    //   time: sfn.WaitTime.duration(Duration.seconds(5))
+    // });
 
-    const getHighlightTranscriptionJobStatus = new tasks.CallAwsService(this, 'GetHighlightTranscriptionJobStatus', {
-      service: 'transcribe',
-      action: 'getTranscriptionJob',
-      iamAction: 'transcribe:GetTranscriptionJob',
-      iamResources: ['*'],
-      parameters: { "TranscriptionJobName.$": "$.FHD_Job.FHD_Jobname" },
-      resultPath: "$.highlightJobStatus"
-    });
+    // const getHighlightTranscriptionJobStatus = new tasks.CallAwsService(this, 'GetHighlightTranscriptionJobStatus', {
+    //   service: 'transcribe',
+    //   action: 'getTranscriptionJob',
+    //   iamAction: 'transcribe:GetTranscriptionJob',
+    //   iamResources: ['*'],
+    //   parameters: { "TranscriptionJobName.$": "$.FHD_Job.FHD_Jobname" },
+    //   resultPath: "$.highlightJobStatus"
+    // });
 
-    const checkHighlightTranscriptionJobStatus = new sfn.Choice(this, 'CheckHighlightTranscriptionJobStatus');
+    // const checkHighlightTranscriptionJobStatus = new sfn.Choice(this, 'CheckHighlightTranscriptionJobStatus');
 
     // Definition body
     const definitionBody = prepareParameters
@@ -298,50 +298,50 @@ export class VideoUploadStateMachine extends Construct {
       .next(checkTranscriptionJobStatus
         .when(sfn.Condition.stringEquals("$.jobStatus.TranscriptionJob.TranscriptionJobStatus", "COMPLETED"),
           updateDDB(1)
-            .next(updateEvent(1))
-            .next(extractTopicsTask)
-            .next(processTopicsMap
-              .itemProcessor(processTopicTask)
-            )
-            .next(updateDDB(2))
-            .next(updateEvent(2))
-            .next(highlightExtractMap
-              .itemProcessor(extractTimeframeTask
-                .next(checkExtractionJobStatus
-                  .when(sfn.Condition.numberEquals("$.timeframe_extracted.statusCode", 200),
-                    mediaConvertExtractJob
-                      .next(mediaConvertExtractJobParam)
-                      .next(startHighlightTranscriptionJob)
-                      .next(waitForHighlightTranscriptionJob)
-                      .next(getHighlightTranscriptionJobStatus)
-                      .next(checkHighlightTranscriptionJobStatus
-                        .when(sfn.Condition.stringEquals("$.highlightJobStatus.TranscriptionJob.TranscriptionJobStatus", "COMPLETED"),
-                          new sfn.Succeed(this, 'HighlightTranscriptionSucceeded')
-                        )
-                        .when(sfn.Condition.stringEquals("$.highlightJobStatus.TranscriptionJob.TranscriptionJobStatus", "FAILED"),
-                          new sfn.Fail(this, 'HighlightTranscriptionFailed', {
-                            cause: "Highlight transcription job failed",
-                            error: "HighlightTranscriptionJobFailed"
-                          })
-                        )
-                        .otherwise(waitForHighlightTranscriptionJob)
-                      )
-                  )
-                  .otherwise(new sfn.Pass(this, 'ExtractionFailed', {}))
+            .next(updateEvent(1))));
+            // .next(extractTopicsTask)
+            // .next(processTopicsMap
+            //   .itemProcessor(processTopicTask)
+            // )
+            // .next(updateDDB(2))
+            // .next(updateEvent(2))
+            // .next(highlightExtractMap
+            //   .itemProcessor(extractTimeframeTask
+            //     .next(checkExtractionJobStatus
+            //       .when(sfn.Condition.numberEquals("$.timeframe_extracted.statusCode", 200),
+            //         mediaConvertExtractJob
+            //           .next(mediaConvertExtractJobParam)
+            //           .next(startHighlightTranscriptionJob)
+            //           .next(waitForHighlightTranscriptionJob)
+            //           .next(getHighlightTranscriptionJobStatus)
+            //           .next(checkHighlightTranscriptionJobStatus
+            //             .when(sfn.Condition.stringEquals("$.highlightJobStatus.TranscriptionJob.TranscriptionJobStatus", "COMPLETED"),
+            //               new sfn.Succeed(this, 'HighlightTranscriptionSucceeded')
+            //             )
+            //             .when(sfn.Condition.stringEquals("$.highlightJobStatus.TranscriptionJob.TranscriptionJobStatus", "FAILED"),
+            //               new sfn.Fail(this, 'HighlightTranscriptionFailed', {
+            //                 cause: "Highlight transcription job failed",
+            //                 error: "HighlightTranscriptionJobFailed"
+            //               })
+            //             )
+            //             .otherwise(waitForHighlightTranscriptionJob)
+            //           )
+            //       )
+                  // .otherwise(new sfn.Pass(this, 'ExtractionFailed', {}))
                 )
               )
-            )
-            .next(updateDDB(3))
-            .next(updateEvent(3))
-        )
-        .when(sfn.Condition.stringEquals("$.jobStatus.TranscriptionJob.TranscriptionJobStatus", "FAILED"),
-          new sfn.Fail(this, 'TranscriptionJobFailed', {
-            cause: "Transcription job failed",
-            error: "TranscriptionJobFailed"
-          })
-        )
-        .otherwise(waitForTranscriptionJob)
-      );
+            // )
+        //     .next(updateDDB(3))
+        //     .next(updateEvent(3))
+        // )
+        // .when(sfn.Condition.stringEquals("$.jobStatus.TranscriptionJob.TranscriptionJobStatus", "FAILED"),
+        //   new sfn.Fail(this, 'TranscriptionJobFailed', {
+        //     cause: "Transcription job failed",
+        //     error: "TranscriptionJobFailed"
+        //   })
+        // )
+        // .otherwise(waitForTranscriptionJob)
+      // );
 
     this.stateMachine = new sfn.StateMachine(this, 'VideoUploadStateMachine', {
       definitionBody: sfn.DefinitionBody.fromChainable(definitionBody),
