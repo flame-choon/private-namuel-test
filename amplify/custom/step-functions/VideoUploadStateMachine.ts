@@ -297,8 +297,8 @@ export class VideoUploadStateMachine extends Construct {
       .next(getTranscriptionJobStatus)
       .next(checkTranscriptionJobStatus
         .when(sfn.Condition.stringEquals("$.jobStatus.TranscriptionJob.TranscriptionJobStatus", "COMPLETED"),
-          updateDDB(1)
-            .next(updateEvent(1))));
+          updateDDB(1) 
+            .next(updateEvent(1))
             // .next(extractTopicsTask)
             // .next(processTopicsMap
             //   .itemProcessor(processTopicTask)
@@ -333,15 +333,15 @@ export class VideoUploadStateMachine extends Construct {
             // )
         //     .next(updateDDB(3))
         //     .next(updateEvent(3))
-        // )
-        // .when(sfn.Condition.stringEquals("$.jobStatus.TranscriptionJob.TranscriptionJobStatus", "FAILED"),
-        //   new sfn.Fail(this, 'TranscriptionJobFailed', {
-        //     cause: "Transcription job failed",
-        //     error: "TranscriptionJobFailed"
-        //   })
-        // )
-        // .otherwise(waitForTranscriptionJob)
-      // );
+        )
+        .when(sfn.Condition.stringEquals("$.jobStatus.TranscriptionJob.TranscriptionJobStatus", "FAILED"),
+          new sfn.Fail(this, 'TranscriptionJobFailed', {
+            cause: "Transcription job failed",
+            error: "TranscriptionJobFailed"
+          })
+        )
+        .otherwise(waitForTranscriptionJob)
+      );
 
     this.stateMachine = new sfn.StateMachine(this, 'VideoUploadStateMachine', {
       definitionBody: sfn.DefinitionBody.fromChainable(definitionBody),
