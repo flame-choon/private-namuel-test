@@ -39,7 +39,6 @@ def lambda_handler(event, context):
 
 def get_topics_from_transcript(script, modelID):
     prompt = f"""
-    
     Human:
     Below is a transcript of a video.
     <script> {script} </script>
