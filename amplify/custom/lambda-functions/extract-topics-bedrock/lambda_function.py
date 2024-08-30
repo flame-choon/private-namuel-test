@@ -50,7 +50,6 @@ def get_topics_from_transcript(script, modelID):
     4. Express each topic in the script's original language.
     5. Keep proper nouns in their original language (typically English, but can be in Korean, Japanese, or other).
     6. Format each topic like a concise video title, using 8 words or less.
-    7. Please express it in a length that can be conveyed in about 30 seconds.
 
     Present the extracted agenda in this JSON format:
     <JSON>
