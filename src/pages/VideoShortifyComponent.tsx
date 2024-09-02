@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import TranscribeComponent from './shortify/TranscribeComponent';
 import InProgressComponent from './shortify/InProgressComponent';
 import HighlightComponent from './shortify/HighlightComponent';
-import OptionSelectComponent from './shortify/OptionSelectComponent';
 import ShortifyComponent from './shortify/ShortifyComponent';
 
 interface VideoShortifyProps {
@@ -111,17 +110,9 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
           ),
         },
         {
-          title: "Shortify Option Select ",
-          content: (
-              stage > 2 ?
-                  <OptionSelectComponent id={id!} />
-                  : <InProgressComponent />
-          ),
-        },
-        {
           title: "Shortify highlight",
           content: (
-            stage > 3 ?
+            stage > 2 ?
             <ShortifyComponent id={id!} tab={selectedTab} title={highlightTitle} ref={childRef} />
             : <InProgressComponent />
           ),
