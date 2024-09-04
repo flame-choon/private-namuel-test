@@ -1,4 +1,4 @@
-import { Box, Link,  Spinner,  Wizard } from '@cloudscape-design/components';
+import { Box, Link, Spinner, Wizard } from '@cloudscape-design/components';
 import React, { useEffect, useState, useRef } from 'react';
 
 import { readHistory } from '../apis/history';
@@ -24,12 +24,16 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
   const [ isLoadingNextStep, setIsLoadingNextStep ] = useState(false);
   const childRef = useRef<{ submit: () => void }>(null);
 
+  // OptionSelectComponent의 상태값들
+  const [selectedImage, setSelectedImage] = useState<{ label: string; value: string; imgSrc: string } | null>(null);
+  const [titleGroupValue, setTitleGroupValue] = useState<string>('off');
+  const [subTitleGroupValue, setSubTitleGroupValue] = useState<string>('off');
+
 
   const [
     activeStepIndex,
     setActiveStepIndex
   ] = useState(0);
-
 
   useEffect(() => {
     console.log("subscribe", id!)
@@ -62,7 +66,6 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
       childRef.current.submit();
     }
   }
-
 
   if(stage === -1)
     return <Box textAlign='center'><Spinner size='large'/></Box>
@@ -114,7 +117,15 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
           title: "Shortify Option Select ",
           content: (
               stage > 2 ?
-                  <OptionSelectComponent id={id!} />
+                  <OptionSelectComponent 
+                    id={id!} 
+                    selectedImage={selectedImage} 
+                    setSelectedImage={setSelectedImage} 
+                    titleGroupValue={titleGroupValue} 
+                    setTitleGroupValue={setTitleGroupValue} 
+                    subTitleGroupValue={subTitleGroupValue} 
+                    setSubTitleGroupValue={setSubTitleGroupValue} 
+                  />
                   : <InProgressComponent />
           ),
         },
@@ -127,7 +138,6 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
           ),
         }
       ]}
-
     />
     </>
   );
