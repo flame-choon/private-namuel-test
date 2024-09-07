@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import TranscribeComponent from './shortify/TranscribeComponent';
 import InProgressComponent from './shortify/InProgressComponent';
 import HighlightComponent from './shortify/HighlightComponent';
-import OptionSelectComponent from './shortify/OptionSelectComponent';
+// import OptionSelectComponent from './shortify/OptionSelectComponent';
 import ShortifyComponent from './shortify/ShortifyComponent';
 
 interface VideoShortifyProps {
@@ -24,10 +24,10 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
   const [ isLoadingNextStep, setIsLoadingNextStep ] = useState(false);
   const childRef = useRef<{ submit: () => void }>(null);
 
-  // OptionSelectComponent의 상태값들
-  const [selectedImage, setSelectedImage] = useState<{ label: string; value: string; imgSrc: string } | null>(null);
-  const [titleGroupValue, setTitleGroupValue] = useState<string>('off');
-  const [subTitleGroupValue, setSubTitleGroupValue] = useState<string>('off');
+  // // OptionSelectComponent의 상태값들
+  // const [selectedImage, setSelectedImage] = useState<{ label: string; value: string; imgSrc: string } | null>(null);
+  // const [titleGroupValue, setTitleGroupValue] = useState<string>('off');
+  // const [subTitleGroupValue, setSubTitleGroupValue] = useState<string>('off');
 
 
   const [
