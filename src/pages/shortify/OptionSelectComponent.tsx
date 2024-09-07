@@ -46,12 +46,12 @@ const imageOptions: ImageOption[] = [
   ];
 
 const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
-  selectedImage,
-  setSelectedImage,
-  titleGroupValue,
-  setTitleGroupValue,
-  subTitleGroupValue,
-  setSubTitleGroupValue,
+  // selectedImage,
+  // setSelectedImage,
+  // titleGroupValue,
+  // setTitleGroupValue,
+  // subTitleGroupValue,
+  // setSubTitleGroupValue,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -61,10 +61,10 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
 
   const handleChange = (detail: any) => {
     if (detail.selectedOption && detail.selectedOption.value) {
-      const selectedOption = imageOptions.find(
-        (option) => option.value === detail.selectedOption.value
-      );
-      setSelectedImage(selectedOption || null);
+      // const selectedOption = imageOptions.find(
+      //   (option) => option.value === detail.selectedOption.value
+      // );
+      // setSelectedImage(selectedOption || null);
     }
   };
 
@@ -99,7 +99,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
           }
         >
           <Box>
-            <Select
+            {/* <Select
               selectedOption={selectedImage ? { label: selectedImage.label, value: selectedImage.value } : null}
               onChange={({ detail }) => handleChange(detail)}
               options={imageOptions.map((option) => ({
@@ -119,7 +119,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
                   style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }}
                 />
               </Box>
-            )}
+            )} */}
           </Box>
         </Container>
       </Box>
@@ -136,7 +136,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
             </Header>
           }
         >
-          <Box>
+          {/* <Box>
             <RadioGroup
               onChange={({ detail }) => setTitleGroupValue(detail.value)}
               value={titleGroupValue}
@@ -145,7 +145,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
                 { value: 'off', label: 'Off' },
               ]}
             />
-          </Box>
+          </Box> */}
         </Container>
       </Box>
 
@@ -161,7 +161,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
             </Header>
           }
         >
-          <Box>
+          {/* <Box>
             <RadioGroup
               onChange={({ detail }) => setSubTitleGroupValue(detail.value)}
               value={subTitleGroupValue}
@@ -170,7 +170,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
                 { value: 'off', label: 'Off' },
               ]}
             />
-          </Box>
+          </Box> */}
         </Container>
       </Box>
     </ContentLayout>
