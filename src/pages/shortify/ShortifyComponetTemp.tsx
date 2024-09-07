@@ -89,7 +89,9 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
   useEffect(() => {
     setTitle(props.title);
     setIsTitle(true);
+    setIsTitleValue("on")
     setIsSubtitle(true);
+    setIsSubtitleValue("on");
 
     getUrl({
       path: `videos/${props.id}/FHD/${props.tab}-FHD.mp4`,
