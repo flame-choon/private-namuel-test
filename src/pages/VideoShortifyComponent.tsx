@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import TranscribeComponent from './shortify/TranscribeComponent';
 import InProgressComponent from './shortify/InProgressComponent';
 import HighlightComponent from './shortify/HighlightComponent';
-import OptionSelectComponent from './shortify/OptionSelectComponent';
+// import OptionSelectComponent from './shortify/OptionSelectComponent';
 import ShortifyComponent from './shortify/ShortifyComponent';
 
 interface VideoShortifyProps {
