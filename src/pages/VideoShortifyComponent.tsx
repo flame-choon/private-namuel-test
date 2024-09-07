@@ -66,9 +66,8 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
 
   const onSubmitHandler = () => {
     if(childRef.current){
-      alert('submit');
       setIsLoadingNextStep(true);
-      // childRef.current.submit();
+      childRef.current.submit();
     }
   }
 
