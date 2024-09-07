@@ -8,6 +8,8 @@ import {
   Table,
   SpaceBetween,
   Alert,
+  Box,
+  RadioGroup
 } from '@cloudscape-design/components';
 import { useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
@@ -377,6 +379,16 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
       <h3>Edit Title</h3>
       <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
 
+      <h3>Subtitle selection option</h3>
+      <Box>
+        <RadioGroup
+          value='on' 
+          items={[
+            { value: 'on', label: 'On'},
+            { value: 'off', label: 'Off' },
+          ]}
+        />
+      </Box>
 
       <h3>Edit Video Frame</h3>
       { videoUrl !== "" &&
