@@ -81,7 +81,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
   const [ title, setTitle ] = useState("");
   const [ subtitles, setSubtitles ] = useState<Subtitle[]>([]);
 
-  const [ isSubtitle, setIsSubtitle ] = useState("");
+  const [ isSubtitle, setIsSubtitle ] = useState(false);
+  const [ isSubtitleValue, setIsSubtitleValue] = useState("");
 
   useEffect(() => {
     setTitle(props.title);
@@ -446,8 +447,15 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <h3>Subtitle selection option</h3>
       <Box>
         <RadioGroup
-          onChange={({ detail }) => setIsSubtitle(detail.value)}
-          value={isSubtitle} 
+          onChange={({ detail }) => { 
+            if(detail.value == 'on') {
+                setIsSubtitle(true);
+            } else {
+                setIsSubtitle(false);
+            }
+            setIsSubtitleValue(detail.value);
+          }}
+          value={isSubtitleValue} 
           items={[
             { value: 'on', label: 'On'},
             { value: 'off', label: 'Off' },
@@ -457,6 +465,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
 
       {isSubtitle && <h3>Edit Subtitle</h3>}
 
+      <h3>Edit Subtitle</h3>
       <Table
         columnDefinitions={[
           {
