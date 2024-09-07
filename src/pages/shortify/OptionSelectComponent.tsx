@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Spinner,
-  // Box,
+  Box,
   Container,
   Header,
   TextContent
@@ -50,14 +50,14 @@ interface OptionSelectComponentProps {
 
 const OptionSelectComponent: React.FC<OptionSelectComponentProps> = () => {
 
-  // const [ loading, setLoading ] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
-  // useEffect(() => {
-  //   setLoading(false)
-  // }, [])
+  useEffect(() => {
+    setLoading(false)
+  }, [])
 
-  // if(loading)
-  //   return <Box textAlign='center'><Spinner size='large'/></Box>
+  if(loading)
+    return <Box textAlign='center'><Spinner size='large'/></Box>
   
   return (
     <Container
