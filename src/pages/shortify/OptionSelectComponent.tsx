@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Spinner,
   Box,
-  Select,
-  RadioGroup,
+  // Select,
+  // RadioGroup,
 } from '@cloudscape-design/components';
 import ContentLayout from '@cloudscape-design/components/content-layout';
 import Container from '@cloudscape-design/components/container';
@@ -21,29 +21,29 @@ interface OptionSelectComponentProps {
     // setSubTitleGroupValue: (value: string) => void;
 }
 
-interface ImageOption {
-  label: string;
-  value: string;
-  imgSrc: string;
-}
+// interface ImageOption {
+//   label: string;
+//   value: string;
+//   imgSrc: string;
+// }
 
-const imageOptions: ImageOption[] = [
-    {
-      label: 'White',
-      value: 'White',
-      imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
-    },
-    {
-      label: 'Blue',
-      value: 'Blue',
-      imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
-    },
-    {
-      label: 'Yellow',
-      value: 'Yellow',
-      imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
-    },
-  ];
+// const imageOptions: ImageOption[] = [
+//     {
+//       label: 'White',
+//       value: 'White',
+//       imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+//     },
+//     {
+//       label: 'Blue',
+//       value: 'Blue',
+//       imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+//     },
+//     {
+//       label: 'Yellow',
+//       value: 'Yellow',
+//       imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+//     },
+//   ];
 
 const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
   // selectedImage,
@@ -59,14 +59,14 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
     setLoading(false);
   }, []);
 
-  const handleChange = (detail: any) => {
-    if (detail.selectedOption && detail.selectedOption.value) {
+  // const handleChange = (detail: any) => {
+  //   if (detail.selectedOption && detail.selectedOption.value) {
       // const selectedOption = imageOptions.find(
       //   (option) => option.value === detail.selectedOption.value
       // );
       // setSelectedImage(selectedOption || null);
-    }
-  };
+  //   }
+  // };
 
   if (loading) {
     return (
