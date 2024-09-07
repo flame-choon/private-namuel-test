@@ -81,6 +81,8 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
   const [ title, setTitle ] = useState("");
   const [ subtitles, setSubtitles ] = useState<Subtitle[]>([]);
 
+  const isSubtitle = false;
+
   useEffect(() => {
     setTitle(props.title);
 
@@ -379,17 +381,6 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
       <h3>Edit Title</h3>
       <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
 
-      <h3>Subtitle selection option</h3>
-      <Box>
-        <RadioGroup
-          value='on' 
-          items={[
-            { value: 'on', label: 'On'},
-            { value: 'off', label: 'Off' },
-          ]}
-        />
-      </Box>
-
       <h3>Edit Video Frame</h3>
       { videoUrl !== "" &&
       <>
@@ -452,7 +443,19 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
       </>
       }
 
-      <h3>Edit Subtitle</h3>
+      <h3>Subtitle selection option</h3>
+      <Box>
+        <RadioGroup
+          value='on' 
+          items={[
+            { value: 'on', label: 'On'},
+            { value: 'off', label: 'Off' },
+          ]}
+        />
+      </Box>
+
+      {isSubtitle && <h3>Edit Subtitle</h3>}
+
       <Table
         columnDefinitions={[
           {
