@@ -4,8 +4,7 @@ import {
   // Spinner,
   // Box,
   Container,
-  Header,
-  TextContent
+  Header
   // Select,
   // RadioGroup,
 } from '@cloudscape-design/components';
@@ -49,7 +48,7 @@ interface OptionSelectComponentProps {
 //     },
 //   ];
 
-const OptionSelectComponent: React.FC<OptionSelectComponentProps> = () => {
+const OptionSelectComponent: React.FC<OptionSelectComponentProps> = (props) => {
 
   // const [loading, setLoading] = useState<boolean>(true);
 
@@ -64,16 +63,10 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = () => {
     <Container
       header={
         <Header variant="h2">
-          Option Select
+          ${props.id}
         </Header>
       }
     >
-
-     <TextContent>
-        <p style={{maxHeight: "60vh", overflow: "scroll"}}>
-          OPTION SELECT
-        </p>
-      </TextContent>    
     </Container>
   );
 };
