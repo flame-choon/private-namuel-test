@@ -132,7 +132,7 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
         {
           title: "Shortify highlight",
           content: (
-            stage > 2 ?
+            stage > 3 ?
             <ShortifyComponent id={id!} tab={selectedTab} title={highlightTitle} ref={childRef} />
             : <InProgressComponent />
           ),
