@@ -81,6 +81,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
   const [ title, setTitle ] = useState("");
   const [ subtitles, setSubtitles ] = useState<Subtitle[]>([]);
 
+  const [ isTitle, setIsTitle ] = useState(false);
+  const [ isTitleValue, setIsTitleValue] = useState("");
   const [ isSubtitle, setIsSubtitle ] = useState(false);
   const [ isSubtitleValue, setIsSubtitleValue] = useState("");
 
@@ -171,7 +173,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       })
 
       const converted = convertSections();
-      generateShort(converted, props.id, props.tab, '')
+      generateShort(converted, props.id, props.tab, title)
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
   }));
@@ -379,9 +381,31 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
           Video #{props.tab+1}
         </Header>
       }>
-      <h3>Edit Title</h3>
-      <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
 
+      <h3>Title selection option</h3>
+      <Box>
+        <RadioGroup
+          onChange={({ detail }) => { 
+            if(detail.value == 'on') {
+                setIsTitle(true);
+            } else {
+                setIsTitle(false);
+            }
+            setIsTitleValue(detail.value);
+          }}
+          value={isTitleValue} 
+          items={[
+            { value: 'on', label: 'On'},
+            { value: 'off', label: 'Off' },
+          ]}
+        />
+      </Box>
+
+      {isTitle &&  <h3>Edit Title</h3> }
+      {isTitle &&   
+      <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
+      }
+      
       <h3>Edit Video Frame</h3>
       { videoUrl !== "" &&
       <>
@@ -465,7 +489,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
 
       {isSubtitle && <h3>Edit Subtitle</h3>}
       {isSubtitle &&
-      <Table
+      <Table 
+
         columnDefinitions={[
           {
             id: "timestring",
