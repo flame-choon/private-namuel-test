@@ -13,12 +13,12 @@ import Alert from '@cloudscape-design/components/alert';
 
 interface OptionSelectComponentProps {
     id: string;
-    selectedImage: { label: string; value: string; imgSrc: string } | null; // imgSrc 포함
-    setSelectedImage: (value: { label: string; value: string; imgSrc: string } | null) => void;
-    titleGroupValue: string;
-    setTitleGroupValue: (value: string) => void;
-    subTitleGroupValue: string;
-    setSubTitleGroupValue: (value: string) => void;
+    // selectedImage: { label: string; value: string; imgSrc: string } | null; // imgSrc 포함
+    // setSelectedImage: (value: { label: string; value: string; imgSrc: string } | null) => void;
+    // titleGroupValue: string;
+    // setTitleGroupValue: (value: string) => void;
+    // subTitleGroupValue: string;
+    // setSubTitleGroupValue: (value: string) => void;
 }
 
 interface ImageOption {
