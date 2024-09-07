@@ -177,6 +177,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       })
 
       alert(isTitle);
+      setTitle("");
       alert(title);
 
       const converted = convertSections();
