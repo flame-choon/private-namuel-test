@@ -88,6 +88,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
 
   useEffect(() => {
     setTitle(props.title);
+    setIsTitle(true);
+    setIsSubtitle(true);
 
     getUrl({
       path: `videos/${props.id}/FHD/${props.tab}-FHD.mp4`,
@@ -405,7 +407,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       {isTitle &&   
       <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
       }
-      
+
       <h3>Edit Video Frame</h3>
       { videoUrl !== "" &&
       <>
