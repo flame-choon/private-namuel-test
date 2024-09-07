@@ -96,13 +96,14 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
       steps={[
         {
           title: "Transcribe video",
-          info: <Link variant="info">Info</Link>,
+          // info: <Link variant="info">Info</Link>,
           description:
             "It converts the audio of the video into text. This process may take about 5 minutes.",
           content: (
-            stage > 0 ?
-            <TranscribeComponent id={id!}/>
-            : <InProgressComponent />
+            <TranscribeComponent id={id!} />
+            // stage > 0 ?
+            // <TranscribeComponent id={id!} />
+            // : <InProgressComponent />
           )
         },
         {
