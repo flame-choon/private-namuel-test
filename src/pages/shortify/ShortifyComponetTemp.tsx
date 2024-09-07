@@ -176,6 +176,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
         }
       })
 
+      // 제목 여부 설정
       var finalTitle = "";
       if(isTitle == false){
         finalTitle = "";
@@ -184,6 +185,11 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       }
 
       const converted = convertSections();
+
+      console.log(converted);
+      console.log(props.id)
+      console.log(props.tab);
+      
       generateShort(converted, props.id, props.tab, finalTitle)
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
