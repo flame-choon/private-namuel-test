@@ -114,9 +114,17 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
           ),
         },
         {
+          title: "Shortify highlight",
+          content: (
+            stage > 2 ?
+            <ShortifyComponent id={id!} tab={selectedTab} title={highlightTitle} ref={childRef} />
+            : <InProgressComponent />
+          ),
+        },
+        {
           title: "Shortify Option Select ",
           content: (
-              stage > 2 ?
+              stage > 3 ?
                   <OptionSelectComponent 
                     id={id!} 
                     // selectedImage={selectedImage} 
@@ -127,14 +135,6 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
                     // setSubTitleGroupValue={setSubTitleGroupValue} 
                   />
                   : <InProgressComponent />
-          ),
-        },
-        {
-          title: "Shortify highlight",
-          content: (
-            stage > 2 ?
-            <ShortifyComponent id={id!} tab={selectedTab} title={highlightTitle} ref={childRef} />
-            : <InProgressComponent />
           ),
         }
       ]}
