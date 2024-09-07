@@ -25,9 +25,9 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
   const childRef = useRef<{ submit: () => void }>(null);
 
   // // OptionSelectComponent의 상태값들
-  // const [selectedImage, setSelectedImage] = useState<{ label: string; value: string; imgSrc: string } | null>(null);
-  // const [titleGroupValue, setTitleGroupValue] = useState<string>('off');
-  // const [subTitleGroupValue, setSubTitleGroupValue] = useState<string>('off');
+  const [selectedImage, setSelectedImage] = useState<{ label: string; value: string; imgSrc: string } | null>(null);
+  const [titleGroupValue, setTitleGroupValue] = useState<string>('off');
+  const [subTitleGroupValue, setSubTitleGroupValue] = useState<string>('off');
 
 
   const [
@@ -119,12 +119,12 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
               stage > 2 ?
                   <OptionSelectComponent 
                     id={id!} 
-                    // selectedImage={selectedImage} 
-                    // setSelectedImage={setSelectedImage} 
-                    // titleGroupValue={titleGroupValue} 
-                    // setTitleGroupValue={setTitleGroupValue} 
-                    // subTitleGroupValue={subTitleGroupValue} 
-                    // setSubTitleGroupValue={setSubTitleGroupValue} 
+                    selectedImage={selectedImage} 
+                    setSelectedImage={setSelectedImage} 
+                    titleGroupValue={titleGroupValue} 
+                    setTitleGroupValue={setTitleGroupValue} 
+                    subTitleGroupValue={subTitleGroupValue} 
+                    setSubTitleGroupValue={setSubTitleGroupValue} 
                   />
                   : <InProgressComponent />
           ),

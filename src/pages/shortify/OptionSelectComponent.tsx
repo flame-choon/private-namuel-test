@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Spinner,
   Box,
-  // Select,
-  // RadioGroup,
+  Select,
+  RadioGroup,
 } from '@cloudscape-design/components';
 import ContentLayout from '@cloudscape-design/components/content-layout';
 import Container from '@cloudscape-design/components/container';
@@ -13,45 +13,45 @@ import Alert from '@cloudscape-design/components/alert';
 
 interface OptionSelectComponentProps {
     id: string;
-    // selectedImage: { label: string; value: string; imgSrc: string } | null; // imgSrc 포함
-    // setSelectedImage: (value: { label: string; value: string; imgSrc: string } | null) => void;
-    // titleGroupValue: string;
-    // setTitleGroupValue: (value: string) => void;
-    // subTitleGroupValue: string;
-    // setSubTitleGroupValue: (value: string) => void;
+    selectedImage: { label: string; value: string; imgSrc: string } | null; // imgSrc 포함
+    setSelectedImage: (value: { label: string; value: string; imgSrc: string } | null) => void;
+    titleGroupValue: string;
+    setTitleGroupValue: (value: string) => void;
+    subTitleGroupValue: string;
+    setSubTitleGroupValue: (value: string) => void;
 }
 
-// interface ImageOption {
-//   label: string;
-//   value: string;
-//   imgSrc: string;
-// }
+interface ImageOption {
+  label: string;
+  value: string;
+  imgSrc: string;
+}
 
-// const imageOptions: ImageOption[] = [
-//     {
-//       label: 'White',
-//       value: 'White',
-//       imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
-//     },
-//     {
-//       label: 'Blue',
-//       value: 'Blue',
-//       imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
-//     },
-//     {
-//       label: 'Yellow',
-//       value: 'Yellow',
-//       imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
-//     },
-//   ];
+const imageOptions: ImageOption[] = [
+    {
+      label: 'White',
+      value: 'White',
+      imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+    },
+    {
+      label: 'Blue',
+      value: 'Blue',
+      imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+    },
+    {
+      label: 'Yellow',
+      value: 'Yellow',
+      imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+    },
+  ];
 
 const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
-  // selectedImage,
-  // setSelectedImage,
-  // titleGroupValue,
-  // setTitleGroupValue,
-  // subTitleGroupValue,
-  // setSubTitleGroupValue,
+  selectedImage,
+  setSelectedImage,
+  titleGroupValue,
+  setTitleGroupValue,
+  subTitleGroupValue,
+  setSubTitleGroupValue,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -59,14 +59,14 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
     setLoading(false);
   }, []);
 
-  // const handleChange = (detail: any) => {
-  //   if (detail.selectedOption && detail.selectedOption.value) {
-      // const selectedOption = imageOptions.find(
-      //   (option) => option.value === detail.selectedOption.value
-      // );
-      // setSelectedImage(selectedOption || null);
-  //   }
-  // };
+  const handleChange = (detail: any) => {
+    if (detail.selectedOption && detail.selectedOption.value) {
+      const selectedOption = imageOptions.find(
+        (option) => option.value === detail.selectedOption.value
+      );
+      setSelectedImage(selectedOption || null);
+    }
+  };
 
   if (loading) {
     return (
@@ -99,7 +99,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
           }
         >
           <Box>
-            {/* <Select
+            <Select
               selectedOption={selectedImage ? { label: selectedImage.label, value: selectedImage.value } : null}
               onChange={({ detail }) => handleChange(detail)}
               options={imageOptions.map((option) => ({
@@ -119,7 +119,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
                   style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }}
                 />
               </Box>
-            )} */}
+            )}
           </Box>
         </Container>
       </Box>
@@ -136,7 +136,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
             </Header>
           }
         >
-          {/* <Box>
+          <Box>
             <RadioGroup
               onChange={({ detail }) => setTitleGroupValue(detail.value)}
               value={titleGroupValue}
@@ -145,7 +145,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
                 { value: 'off', label: 'Off' },
               ]}
             />
-          </Box> */}
+          </Box>
         </Container>
       </Box>
 
@@ -161,7 +161,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
             </Header>
           }
         >
-          {/* <Box>
+          <Box>
             <RadioGroup
               onChange={({ detail }) => setSubTitleGroupValue(detail.value)}
               value={subTitleGroupValue}
@@ -170,7 +170,7 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = ({
                 { value: 'off', label: 'Off' },
               ]}
             />
-          </Box> */}
+          </Box>
         </Container>
       </Box>
     </ContentLayout>
