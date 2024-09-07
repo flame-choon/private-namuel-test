@@ -179,13 +179,16 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
     //   alert(isTitle);
     //   setTitle("");
     //   alert(title);
+    var finalTitle = "";
       if(isTitle == false){
-        setTitle("");   
-        alert(title);
+        finalTitle = "";
+      } else {
+        finalTitle = title;
       }
 
+      alert(finalTitle);
       const converted = convertSections();
-      generateShort(converted, props.id, props.tab, title)
+      generateShort(converted, props.id, props.tab, finalTitle)
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
   }));
