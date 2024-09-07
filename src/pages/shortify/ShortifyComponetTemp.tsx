@@ -176,9 +176,13 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
         }
       })
 
-      alert(isTitle);
-      setTitle("");
-      alert(title);
+    //   alert(isTitle);
+    //   setTitle("");
+    //   alert(title);
+      if(isTitle == false){
+        setTitle("");   
+        alert(title);
+      }
 
       const converted = convertSections();
       generateShort(converted, props.id, props.tab, title)
