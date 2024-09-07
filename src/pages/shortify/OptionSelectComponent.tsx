@@ -1,10 +1,11 @@
-import React from 'react';
 // import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   // Spinner,
   // Box,
   Container,
-  Header
+  Header,
+  TextContent
   // Select,
   // RadioGroup,
 } from '@cloudscape-design/components';
@@ -63,10 +64,15 @@ const OptionSelectComponent: React.FC<OptionSelectComponentProps> = (props) => {
     <Container
       header={
         <Header variant="h2">
-          ${props.id}
+          Option Select
         </Header>
       }
     >
+    <TextContent>
+      <p style={{maxHeight: "60vh", overflow: "scroll"}}>
+        ${props.id}
+      </p>
+    </TextContent>
     </Container>
   );
 };
