@@ -464,8 +464,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       </Box>
 
       {isSubtitle && <h3>Edit Subtitle</h3>}
-
-      <h3>Edit Subtitle</h3>
+      {isSubtitle &&
       <Table
         columnDefinitions={[
           {
@@ -524,6 +523,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
         //   <Pagination currentPageIndex={1} pagesCount={2} />
         // }
       />
+     }
       <br />
       <Alert statusIconAriaLabel="Info">
         A short form video will be generated based on the values input above and the frames for each section.
