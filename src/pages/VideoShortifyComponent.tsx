@@ -12,7 +12,8 @@ import TranscribeComponent from './shortify/TranscribeComponent';
 import InProgressComponent from './shortify/InProgressComponent';
 import HighlightComponent from './shortify/HighlightComponent';
 // import OptionSelectComponent from './shortify/OptionSelectComponent';
-import ShortifyComponent from './shortify/ShortifyComponent';
+// import ShortifyComponent from './shortify/ShortifyComponent';
+import ShortifyTempComponent from './shortify/ShortifyComponetTemp';
 
 interface VideoShortifyProps {
   // Define any props the component expects here
@@ -120,7 +121,7 @@ const VideoShortify: React.FC<VideoShortifyProps> = () => {
           title: "Shortify highlight",
           content: (
             stage > 2 ?
-            <ShortifyComponent id={id!} tab={selectedTab} title={highlightTitle} ref={childRef} />
+            <ShortifyTempComponent id={id!} tab={selectedTab} title={highlightTitle} ref={childRef} />
             : <InProgressComponent />
           ),
         }
