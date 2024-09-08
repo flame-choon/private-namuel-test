@@ -41,6 +41,7 @@ export class GenerateShortStateMachine extends Construct {
           "highlight.$": "$.highlight",
           "bucket_name.$": "$.bucket_name",
           "question.$": "$.question",
+          "backGroundName.$": "$.backGroundName"
         },
       });
 
