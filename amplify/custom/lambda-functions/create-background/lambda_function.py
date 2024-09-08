@@ -37,8 +37,14 @@ def load_font(font_path, size):
         return None
 
 def lambda_handler(event, context):
+
+
     backGroundImageSrc = event["backGroundName"]
+
+    print("background img :" + backGroundImageSrc)
     backGroundImageSrc.replace('/amplify/', '')
+
+    print("background img :" + backGroundImageSrc)
 
     square_source_key = backGroundImageSrc
     bucket_name = event["bucket_name"]   
