@@ -218,7 +218,10 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
     // [{"CropHeight":"960","CropWidth":"960","Xoffset":"458","Yoffset":"118","SectionDuration":"36.08"}]
       console.log(props.tab);
 
-      generateShort(converted, props.id, props.tab, finalTitle, "test_copy.png")
+    // 이미지 선택 여부 확인 - jaehyun
+    const backgroundImage = selectedImage ? selectedImage.imgSrc : "test_copy.png"; // default_image.png는 기본 이미지 경로
+
+      generateShort(converted, props.id, props.tab, finalTitle, backgroundImage )
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
   }));
