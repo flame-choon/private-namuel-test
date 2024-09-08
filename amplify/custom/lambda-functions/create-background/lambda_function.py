@@ -40,12 +40,12 @@ def lambda_handler(event, context):
 
 
     backGroundImageSrc = event["backGroundName"]
-
-    print("background img :" + backGroundImageSrc)
     
     print(backGroundImageSrc.replace('/amplify/', ''))
 
     backGroundImageSrc = backGroundImageSrc.replace('/amplify/', '')
+
+    print("background img :" + backGroundImageSrc)
     square_source_key = backGroundImageSrc
     bucket_name = event["bucket_name"]   
     uuid = event['videoId']
