@@ -14,18 +14,18 @@ export const modelOptions: ModelOption[] = [
     modelId: "anthropic.claude-3-opus-20240229-v1:0",
     provider: "Anthropic"
   },
-  // {
-  //   name: "Claude 3.5 Sonnet",
-  //   logo: "logos/anthropic-logo.png",
-  //   modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
-  //   provider: "Anthropic"
-  // },
   {
-    name: "Claude 3.0 Sonnet",
+    name: "Claude 3.5 Sonnet",
     logo: "logos/anthropic-logo.png",
-    modelId: "anthropic.claude-3-sonnet-20240229-v1:0",
+    modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
     provider: "Anthropic"
   },
+  // {
+  //   name: "Claude 3.0 Sonnet",
+  //   logo: "logos/anthropic-logo.png",
+  //   modelId: "anthropic.claude-3-sonnet-20240229-v1:0",
+  //   provider: "Anthropic"
+  // },
   // {
   //   name: "Claude 3.0 Haiku",
   //   logo: "logos/anthropic-logo.png",
