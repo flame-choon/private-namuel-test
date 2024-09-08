@@ -37,7 +37,10 @@ def load_font(font_path, size):
         return None
 
 def lambda_handler(event, context):
-    square_source_key = 'assets/' + event["backGroundName"]
+    backGroundImageSrc = event["backGroundName"]
+    backGroundImageSrc.replace('/amplify/', '')
+
+    square_source_key = backGroundImageSrc
     bucket_name = event["bucket_name"]   
     uuid = event['videoId']
     index = event['highlight']
