@@ -197,8 +197,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
     // [{"CropHeight":"960","CropWidth":"960","Xoffset":"458","Yoffset":"118","SectionDuration":"36.08"}]
       console.log(props.tab);
 
-    //   generateShort(converted, props.id, props.tab, finalTitle, "test_copy.png")
-    //   .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
+      generateShort(converted, props.id, props.tab, finalTitle, "test_copy.png")
+      .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
   }));
 

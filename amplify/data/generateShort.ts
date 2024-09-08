@@ -8,7 +8,7 @@ export const handler: Schema["generateShort"]["functionHandler"] = async (
   context
 ) => {
   // User prompt
-  const {inputs, videoId, highlight, question} = event.arguments;
+  const {inputs, videoId, highlight, question, backGroundName} = event.arguments;
 
   const stateMachineArn = process.env.STATE_MACHINE;
   
