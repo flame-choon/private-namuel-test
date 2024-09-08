@@ -205,9 +205,11 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
   const subtitlesToVtt = () => {
     let vtt = "WEBVTT";
 
-    // subtitles.forEach((subtitle) => {
-    //   vtt += `\n\n${subtitle.index}\n${subtitle.timestring}\n${subtitle.text}`;
-    // });
+    if(isSubtitle == true){
+        subtitles.forEach((subtitle) => {
+            vtt += `\n\n${subtitle.index}\n${subtitle.timestring}\n${subtitle.text}`;
+        });
+    }
 
     return vtt;
   }
