@@ -9,7 +9,8 @@ import {
   SpaceBetween,
   Alert,
   Box,
-  RadioGroup
+  RadioGroup,
+  Select
 } from '@cloudscape-design/components';
 import { useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
@@ -431,6 +432,31 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       {isTitle &&   
       <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
       }
+
+      {/* <h3>Select a background image</h3>
+      <Box>
+        <Select
+          selectedOption={selectedImage ? { label: selectedImage.label, value: selectedImage.value } : null}
+          onChange={({ detail }) => handleChange(detail)}
+          options={imageOptions.map((option) => ({
+            label: option.label,
+            value: option.value,
+          }))}
+          placeholder="Select a background image"
+        />
+        {selectedImage && (
+          <Box margin={{ top: 'l' }}>
+            <Box textAlign="center" variant="p">
+              Preview Background Image
+            </Box>
+            <img
+              src={selectedImage.imgSrc}
+              alt={selectedImage.label}
+              style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }}
+            />
+          </Box>
+        )}
+      </Box> */}
 
       <h3>Edit Video Frame</h3>
       { videoUrl !== "" &&
