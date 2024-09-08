@@ -37,7 +37,7 @@ def load_font(font_path, size):
         return None
 
 def lambda_handler(event, context):
-    square_source_key = 'assets/shorts-background-1x1.png'
+    square_source_key = 'assets/' + event["backGroundName"]
     bucket_name = event["bucket_name"]   
     uuid = event['videoId']
     index = event['highlight']
