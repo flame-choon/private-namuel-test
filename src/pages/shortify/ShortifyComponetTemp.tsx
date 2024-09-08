@@ -186,10 +186,17 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
 
       const converted = convertSections();
 
-      console.log(converted);
-      console.log(props.id)
+    //   console.log(converted);
+    //   [{"CropHeight":"960","CropWidth":"960","Xoffset":"458","Yoffset":"118","SectionDuration":"36.08"}]
+    //   console.log(props.id)
+    //   console.log()
+    //   EX) converted
+    //      ->
+    //   4939975e-4540-47e1-85d9-85c9601ef5f1
+    // 
+    // [{"CropHeight":"960","CropWidth":"960","Xoffset":"458","Yoffset":"118","SectionDuration":"36.08"}]
       console.log(props.tab);
-      
+
       generateShort(converted, props.id, props.tab, finalTitle)
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
@@ -198,9 +205,9 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
   const subtitlesToVtt = () => {
     let vtt = "WEBVTT";
 
-    subtitles.forEach((subtitle) => {
-      vtt += `\n\n${subtitle.index}\n${subtitle.timestring}\n${subtitle.text}`;
-    });
+    // subtitles.forEach((subtitle) => {
+    //   vtt += `\n\n${subtitle.index}\n${subtitle.timestring}\n${subtitle.text}`;
+    // });
 
     return vtt;
   }
