@@ -68,12 +68,12 @@ const imageOptions: ImageOption[] = [
   {
     label: 'White',
     value: 'White',
-    imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+    imgSrc: 'test.png', // 문자열 경로로 수정
   },
   {
     label: 'Blue',
     value: 'Blue',
-    imgSrc: '/amplify/assets/test_copy.png', // 문자열 경로로 수정
+    imgSrc: 'test_copy.png', // 문자열 경로로 수정
   }
 ];
 
