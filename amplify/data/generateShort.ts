@@ -14,7 +14,7 @@ export const handler: Schema["generateShort"]["functionHandler"] = async (
   
   try {
     const input = JSON.stringify({
-      inputs, videoId, highlight, question, bucket_name: process.env.BUCKET_NAME
+      inputs, videoId, highlight, question, backGroundName, bucket_name: process.env.BUCKET_NAME
     });
 
     const command = new StartExecutionCommand({
