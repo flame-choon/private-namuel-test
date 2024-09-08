@@ -207,19 +207,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
 
       const converted = convertSections();
 
-    //   console.log(converted);
-    //   [{"CropHeight":"960","CropWidth":"960","Xoffset":"458","Yoffset":"118","SectionDuration":"36.08"}]
-    //   console.log(props.id)
-    //   console.log()
-    //   EX) converted
-    //      ->
-    //   4939975e-4540-47e1-85d9-85c9601ef5f1
-    // 
-    // [{"CropHeight":"960","CropWidth":"960","Xoffset":"458","Yoffset":"118","SectionDuration":"36.08"}]
-      console.log(props.tab);
-
-    // 이미지 선택 여부 확인 - jaehyun
-    const backgroundImage = selectedImage ? selectedImage.imgSrc : "test_copy.png"; // default_image.png는 기본 이미지 경로
+      // 이미지 선택 여부 확인 - jaehyun
+      const backgroundImage = selectedImage ? selectedImage.imgSrc : "test_copy.png"; // default_image.png는 기본 이미지 경로
 
       generateShort(converted, props.id, props.tab, finalTitle, backgroundImage )
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
@@ -482,7 +471,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
               Preview Background Image
             </Box>
             <img
-              src={selectedImage.imgSrc}
+              src={"/amplify/assets/" + selectedImage.imgSrc}
               alt={selectedImage.label}
               style={{ width: '100%', maxHeight: '200px', objectFit: 'contain' }}
             />
