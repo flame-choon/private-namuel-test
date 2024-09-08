@@ -170,8 +170,11 @@ const ShortifyComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
       })
 
       const converted = convertSections();
-      generateShort(converted, props.id, props.tab, title)
+      // TEST
+      generateShort(converted, props.id, props.tab, title, "test_copy.png")
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
+      // generateShort(converted, props.id, props.tab, title)
+      // .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
     }
   }));
 

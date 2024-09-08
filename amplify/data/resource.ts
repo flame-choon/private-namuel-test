@@ -64,6 +64,7 @@ const schema = a.schema({
       videoId: a.string().required(),
       highlight: a.integer().required(),
       question: a.string().required(),
+      backGroundName: a.string().required(),
     })
     .returns(a.string())
     .authorization((allow) => [allow.authenticated()])
