@@ -68,12 +68,12 @@ const imageOptions: ImageOption[] = [
   {
     label: 'White',
     value: 'White',
-    imgSrc: 'test.png', // 문자열 경로로 수정
+    imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
   },
   {
     label: 'Blue',
     value: 'Blue',
-    imgSrc: 'test_copy.png', // 문자열 경로로 수정
+    imgSrc: '/amplify/assets/test_copy.png', // 문자열 경로로 수정
   }
 ];
 
@@ -471,7 +471,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
               Preview Background Image
             </Box>
             <img
-              src={"/amplify/assets/" + selectedImage.imgSrc}
+              src={selectedImage.imgSrc}
               alt={selectedImage.label}
               style={{ width: '100%', maxHeight: '200px', objectFit: 'contain' }}
             />
