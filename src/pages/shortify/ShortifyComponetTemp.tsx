@@ -58,6 +58,25 @@ interface SectionInput {
   SectionDuration: string | null;
 };
 
+interface ImageOption {
+  label: string;
+  value: string;
+  imgSrc: string;
+}
+
+const imageOptions: ImageOption[] = [
+  {
+    label: 'White',
+    value: 'White',
+    imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+  },
+  {
+    label: 'Blue',
+    value: 'Blue',
+    imgSrc: '/amplify/assets/test_copy.png', // 문자열 경로로 수정
+  }
+];
+
 const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) => {
 
   const navigate = useNavigate();
@@ -86,6 +105,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
   const [ isTitleValue, setIsTitleValue] = useState("");
   const [ isSubtitle, setIsSubtitle ] = useState(false);
   const [ isSubtitleValue, setIsSubtitleValue] = useState("");
+  const [selectedImage, setSelectedImage] = useState<ImageOption | null>(null);
 
   useEffect(() => {
     setTitle(props.title);
@@ -214,6 +234,15 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
 
     return vtt;
   }
+
+  const handleChange = (detail: any) => {
+    if (detail.selectedOption && detail.selectedOption.value) {
+      const selectedOption = imageOptions.find(
+        (option) => option.value === detail.selectedOption.value
+      );
+      setSelectedImage(selectedOption || null);
+    }
+  };
 
   const convertSections = () => {
 
@@ -433,7 +462,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
       }
 
-      {/* <h3>Select a background image</h3>
+      <h3>Select a background Image</h3>
       <Box>
         <Select
           selectedOption={selectedImage ? { label: selectedImage.label, value: selectedImage.value } : null}
@@ -452,11 +481,11 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
             <img
               src={selectedImage.imgSrc}
               alt={selectedImage.label}
-              style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }}
+              style={{ width: '100%', maxHeight: '200px', objectFit: 'contain' }}
             />
           </Box>
         )}
-      </Box> */}
+      </Box>
 
       <h3>Edit Video Frame</h3>
       { videoUrl !== "" &&
