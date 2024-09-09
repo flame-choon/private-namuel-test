@@ -12,6 +12,7 @@ import {
   RadioGroup,
   Select
 } from '@cloudscape-design/components';
+import { StorageImage } from '@aws-amplify/ui-react-storage'
 import { useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { animated, useSpring } from '@react-spring/web';
@@ -626,6 +627,8 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <Alert statusIconAriaLabel="Info">
         A short form video will be generated based on the values input above and the frames for each section.
       </Alert>
+
+      <StorageImage alt="temp" path="assets/test.png" />
     </Container>
   );
 });
