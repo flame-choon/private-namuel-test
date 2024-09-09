@@ -464,7 +464,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <Input value={title} onChange={({ detail }) => setTitle(detail.value)}/>
       }
 
-      <h3>Select a background Image</h3>
+      <h3>Select a background Image</h3>  
       <Box>
         <Select
           selectedOption={selectedImage ? { label: selectedImage.label, value: selectedImage.value } : null}
@@ -636,7 +636,6 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <Alert statusIconAriaLabel="Info">
         A short form video will be generated based on the values input above and the frames for each section.
       </Alert>
-      {/*<StorageImage alt="temp" path={() => `protected/${props.id}/assets/test.png`}/>*/}
     </Container>
   );
 });
