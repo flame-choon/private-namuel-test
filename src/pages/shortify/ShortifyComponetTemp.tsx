@@ -627,8 +627,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <Alert statusIconAriaLabel="Info">
         A short form video will be generated based on the values input above and the frames for each section.
       </Alert>
-
-      <StorageImage alt="temp" path="assets/test.png" />
+      <StorageImage alt="temp" path='protected/${props.id}/assets/test.png'/>
     </Container>
   );
 });
