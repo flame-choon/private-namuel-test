@@ -12,7 +12,6 @@ import {
   RadioGroup,
   Select
 } from '@cloudscape-design/components';
-import { StorageImage } from '@aws-amplify/ui-react-storage'
 import { useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { animated, useSpring } from '@react-spring/web';
@@ -67,14 +66,24 @@ interface ImageOption {
 
 const imageOptions: ImageOption[] = [
   {
-    label: 'White',
-    value: 'White',
-    imgSrc: '/amplify/assets/test.png', // 문자열 경로로 수정
+    label: 'backgroud-1',
+    value: 'backgroud-1',
+    imgSrc: '/backgroud-1.png', //문자열 경로로 수정
   },
   {
-    label: 'Blue',
-    value: 'Blue',
-    imgSrc: '/amplify/assets/test_copy.png', // 문자열 경로로 수정
+    label: 'backgroud-2',
+    value: 'backgroud-2',
+    imgSrc: '/backgroud-2.png', // 문자열 경로로 수정
+  },
+  {
+    label: 'backgroud-3',
+    value: 'backgroud-3',
+    imgSrc: '/backgroud-3.png', //문자열 경로로 수정
+  },
+  {
+    label: 'backgroud-4',
+    value: 'backgroud-4',
+    imgSrc: '/backgroud-4.png', // 문자열 경로로 수정
   }
 ];
 
@@ -209,7 +218,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       const converted = convertSections();
 
       // 이미지 선택 여부 확인 - jaehyun
-      const backgroundImage = selectedImage ? selectedImage.imgSrc : "test_copy.png"; // default_image.png는 기본 이미지 경로
+      const backgroundImage = selectedImage ? selectedImage.imgSrc : "backgroud-1.png"; // default_image.png는 기본 이미지 경로
 
       generateShort(converted, props.id, props.tab, finalTitle, backgroundImage )
       .then(() => navigate(`/shorts/${props.id}/${props.tab}`));
@@ -627,7 +636,7 @@ const ShortifyTempComponent =  forwardRef((props: ShortifyComponentProps, ref) =
       <Alert statusIconAriaLabel="Info">
         A short form video will be generated based on the values input above and the frames for each section.
       </Alert>
-      <StorageImage alt="temp" path={() => `protected/${props.id}/assets/test.png`}/>
+      {/*<StorageImage alt="temp" path={() => `protected/${props.id}/assets/test.png`}/>*/}
     </Container>
   );
 });
