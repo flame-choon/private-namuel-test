@@ -41,8 +41,6 @@ def lambda_handler(event, context):
 
     backGroundImageSrc = 'assets' + event["backGroundName"]
     
-    print(backGroundImageSrc)
-
     # backGroundImageSrc = backGroundImageSrc.replace('/amplify/', '')
 
     print("background img :" + backGroundImageSrc)
