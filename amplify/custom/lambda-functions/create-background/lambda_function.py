@@ -39,9 +39,9 @@ def load_font(font_path, size):
 def lambda_handler(event, context):
 
 
-    backGroundImageSrc = '/assets/' + event["backGroundName"]
+    backGroundImageSrc = '/assets' + event["backGroundName"]
     
-    # print(backGroundImageSrc.replace('/amplify/', ''))
+    print(backGroundImageSrc)
 
     # backGroundImageSrc = backGroundImageSrc.replace('/amplify/', '')
 
